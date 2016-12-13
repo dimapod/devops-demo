@@ -1,0 +1,23 @@
+**/.idea
+**/target/*
+**/*.iml
+**/*.project
+**/*.classpath
+**/*.settings
+**/*.DS_Store
+*/.gitignore
+**/*.log
+**/*.log.*
+**/.~*#
+**/LOCAL.properties
+
+#vagrant && ansible
+.vagrant
+*.rpm
+*.zip
+*.gz
+*.retry
+
+# netbeans files
+nbactions.xml
+**/nbactions.xml

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="false" scanPeriod="10 seconds">
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="hello" level="DEBUG"/>
+
+    <property name="CONSOLE_NAME" value="CONSOLE" />
+    <property name="LOG_PATH" value="logs"/>
+
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/gs-app.log</File>
+        <encoder>
+            <pattern>%date{yyyy/MM/dd HH:mm:ss.SSS,Europe/Paris} %5level [%thread] %logger{16} - %message%n%throwable{8}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <maxIndex>10</maxIndex>
+            <FileNamePattern>${LOG_PATH}/gs-app.log.%i</FileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <root level="ERROR">
+        <appender-ref ref="fileAppender" />
+    </root>
+
+    <!--
+        to avoid logging to CONSOLE appender one should set property CONSOLE_NAME to something different
+        than CONSOLE, for example CONSOLE_OFF
+    -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE_OFF" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>OFF</level>
+        </filter>
+    </appender>
+
+    <root level="WARN">
+        <appender-ref ref="${CONSOLE_NAME}" />
+    </root>
+
+</configuration>
