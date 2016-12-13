@@ -14,4 +14,3 @@ jobs:
     trigger: true
   - task: app-tests
     file: resource-app/concourse/pipeline/task_run_tests.yml
-  - put: resource-deploy-app

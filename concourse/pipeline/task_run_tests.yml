@@ -10,3 +10,6 @@ inputs:
 
 run:
   path: resource-app/concourse/pipeline/task_run_tests.sh
+
+outputs:
+  - name: gs-bundle
