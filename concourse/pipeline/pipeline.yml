@@ -5,6 +5,23 @@ resources:
   source:
     uri: https://github.com/dimapod/devops-demo.git
 
+#- name: version
+#  type: semver
+#  source:
+#    bucket: dpo-devops
+#    key: current-version
+#    access_key_id: {{s3-access-key-id}}
+#    secret_access_key: {{s3-secret-access-key}}
+#    initial_version: 0.1.0
+
+- name: my-product-rc
+  type: s3
+  source:
+    bucket: dpo-devops
+    regexp: gs-spring-boot-(.*).jar
+    access_key_id: {{s3-access-key-id}}
+    secret_access_key: {{s3-secret-access-key}}
+
 jobs:
 - name: job-test-app
   public: true
@@ -14,3 +31,7 @@ jobs:
     trigger: true
   - task: app-tests
     file: resource-app/concourse/pipeline/task_run_tests.yml
+  - put: my-product-rc
+    params:
+      {file: gs-bundle/target/gs-spring-boot-*.jar}
+
