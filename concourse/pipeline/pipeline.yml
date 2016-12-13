@@ -1,0 +1,17 @@
+---
+resources:
+- name: resource-app
+  type: git
+  source:
+    uri: https://github.com/dimapod/devops-demo.git
+
+jobs:
+- name: job-test-app
+  public: true
+  serial: true
+  plan:
+  - get: resource-app
+    trigger: true
+  - task: app-tests
+    file: resource-app/concourse/pipeline/task_run_tests.yml
+  - put: resource-deploy-app
