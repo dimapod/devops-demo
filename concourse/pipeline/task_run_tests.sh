@@ -2,6 +2,8 @@
 
 echo "Run 'mvn clean install' here ..."
 
-cd ../../gs-spring-boot
+pwd
+
+cd resource-app/gs-spring-boot/
 
 mvn clean install

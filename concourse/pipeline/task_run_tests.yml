@@ -13,3 +13,4 @@ run:
 
 outputs:
   - name: gs-bundle
+    path: resource-app/gs-spring-boot/target
