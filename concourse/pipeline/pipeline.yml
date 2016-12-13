@@ -18,6 +18,7 @@ resources:
   type: s3
   source:
     bucket: dpo-devops
+    region_name: eu-central-1
     regexp: gs-spring-boot-(.*).jar
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
