@@ -1,0 +1,13 @@
+---
+- name: Install GIT
+  become: yes
+  yum:
+    name: git
+    state: present
+    update_cache: yes
+
+
+- name: Checkout repo
+  git:
+    repo: https://github.com/dimapod/devops-demo.git
+    dest: ./devops-demo

@@ -1,0 +1,5 @@
+---
+- name: start concourse
+  environment:
+    CONCOURSE_EXTERNAL_URL: "http://$(hostname --ip-address):8080"
+  shell: docker-compose up -d

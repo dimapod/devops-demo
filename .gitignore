@@ -21,3 +21,5 @@
 # netbeans files
 nbactions.xml
 **/nbactions.xml
+
+concourse/local/keys

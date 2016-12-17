@@ -1,0 +1,14 @@
+---
+
+- hosts: all
+  remote_user: ec2-user
+
+  roles:
+    - docker
+    - git
+    - concourse
+
+  post_tasks:
+    - local_action: shell vagrant ssh-config | grep HostName | awk '{print $2}' > .aws_host
+    - local_action: shell ./open-concourse.sh
+

@@ -1,0 +1,49 @@
+---
+- name: Copy docker-compose.yml
+  copy:
+    src: docker-compose.yml
+    dest: /home/ec2-user
+
+- name: Creates KEY web dir
+  file: path=keys/web state=directory
+
+- name: Creates KEY worker dir
+  file: path=keys/worker state=directory
+
+- name: Generate web keys
+  shell: ssh-keygen -t rsa -f ./keys/web/tsa_host_key -N ''
+  no_log: true
+  args:
+    creates: ./keys/web/tsa_host_key
+
+- name: Generate session_signing key
+  shell: ssh-keygen -t rsa -f ./keys/web/session_signing_key -N ''
+  no_log: true
+  args:
+    creates: ./keys/web/session_signing_key
+
+- name: Generate worker key
+  no_log: true
+  shell: ssh-keygen -t rsa -f ./keys/worker/worker_key -N ''
+  args:
+    creates: ./keys/worker/worker_key
+
+- name: Copy worker pub
+  no_log: true
+  shell: cp ./keys/worker/worker_key.pub ./keys/web/authorized_worker_keys
+  args:
+    creates: ./keys/web/authorized_worker_keys
+
+- name: Copy tsa_host_key pub
+  shell: cp ./keys/web/tsa_host_key.pub ./keys/worker
+  args:
+    creates: ./keys/worker/tsa_host_key.pub
+
+- name: Start concourse
+  become: yes
+  environment:
+    CONCOURSE_EXTERNAL_URL: "http://$(hostname --ip-address):8080"
+  docker_service:
+    project_src: "."
+
+- include: tasks/set-pipeline.yml
