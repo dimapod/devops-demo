@@ -47,7 +47,6 @@
     project_src: "."
 
 - name: Save host name
-  become: yes
   shell: hostname --ip-address > ./devops-demo/concourse/provision/.aws_host
   args:
     creates: ./devops-demo/concourse/provision/.aws_host

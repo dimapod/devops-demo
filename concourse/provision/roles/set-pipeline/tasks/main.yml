@@ -6,4 +6,5 @@
     dest: .
 
 - name: Set Concourse Pipeline
+  become: yes
   shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline devops $(pwd)/devops-demo/concourse/pipeline/pipeline.yml

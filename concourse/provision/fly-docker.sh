@@ -26,7 +26,7 @@ doSetPipeline() {
 
     docker run --rm \
         -v ${PIPELINE_FILE}:/home/pipeline.yml \
-        -v ~/s3-credentials.yml:/s3-credentials.yml \
+        -v $(pwd)/s3-credentials.yml:/s3-credentials.yml \
         xebiafrance/fly \
         "${LOGIN_CMD}; ${SET_PIPELINE_CMD}; ${UNPAUSE_PIPELINE_CMD}"
 }
