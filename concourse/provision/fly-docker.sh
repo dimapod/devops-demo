@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 TARGET=devops
-LOGIN_CMD="fly -t ${TARGET} login --concourse-url http://ec2-35-156-176-228.eu-central-1.compute.amazonaws.com:8080 --username concourse --password xebia"
+SCRIPT_PATH="`dirname \"$0\"`"
+CONCOURSE_URL=$(${SCRIPT_PATH}/concourse-url.sh)
+
+LOGIN_CMD="fly -t ${TARGET} login --concourse-url ${CONCOURSE_URL} --username concourse --password xebia"
 
 setVars() {
     PIPELINE_NAME=$1
@@ -16,15 +19,25 @@ doSetPipeline() {
     PIPELINE_FILE=$2
 
     setVars ${PIPELINE_NAME}
+
+    echo "\$docker> ${LOGIN_CMD}"
+    echo "\$docker> ${SET_PIPELINE_CMD}"
+    echo "\$docker> ${UNPAUSE_PIPELINE_CMD}"
+
     docker run --rm \
         -v ${PIPELINE_FILE}:/home/pipeline.yml \
-        -v ~/s3-credentials.yml:/s3-credentials.yml xebiafrance/fly \
+        -v ~/s3-credentials.yml:/s3-credentials.yml \
+        xebiafrance/fly \
         "${LOGIN_CMD}; ${SET_PIPELINE_CMD}; ${UNPAUSE_PIPELINE_CMD}"
 }
 
 # DESTROY PIPELINE
 doDestroyPipeline() {
     setVars $1
+
+    echo "\$docker> ${LOGIN_CMD}"
+    echo "\$docker> ${DESTROY_PIPELINE_CMD}"
+
     docker run --rm xebiafrance/fly "${LOGIN_CMD}; ${DESTROY_PIPELINE_CMD}"
 }
 

@@ -7,6 +7,7 @@
     - docker
     - git
     - concourse
+    - set-pipeline
 
   post_tasks:
     - local_action: shell vagrant ssh-config | grep HostName | awk '{print $2}' > .aws_host

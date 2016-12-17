@@ -1,0 +1,9 @@
+---
+
+- name: Copy AWS Credentials
+  copy:
+    src: ~/s3-credentials.yml
+    dest: .
+
+- name: Set Concourse Pipeline
+  shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline devops $(pwd)/devops-demo/concourse/pipeline/pipeline.yml
