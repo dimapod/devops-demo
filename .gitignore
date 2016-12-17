@@ -23,3 +23,4 @@ nbactions.xml
 **/nbactions.xml
 
 concourse/local/keys
+.aws_host

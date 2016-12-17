@@ -18,14 +18,14 @@ doSetPipeline() {
     setVars ${PIPELINE_NAME}
     docker run --rm \
         -v ${PIPELINE_FILE}:/home/pipeline.yml \
-        -v ~/s3-credentials.yml:/s3-credentials.yml fly \
+        -v ~/s3-credentials.yml:/s3-credentials.yml xebiafrance/fly \
         "${LOGIN_CMD}; ${SET_PIPELINE_CMD}; ${UNPAUSE_PIPELINE_CMD}"
 }
 
 # DESTROY PIPELINE
 doDestroyPipeline() {
     setVars $1
-    docker run --rm fly "${LOGIN_CMD}; ${DESTROY_PIPELINE_CMD}"
+    docker run --rm xebiafrance/fly "${LOGIN_CMD}; ${DESTROY_PIPELINE_CMD}"
 }
 
 case "$1" in
