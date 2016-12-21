@@ -7,4 +7,5 @@
 
 - name: Set Concourse Pipeline
   become: yes
+#  become_user: docker
   shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline devops $(pwd)/devops-demo/concourse/pipeline/pipeline.yml

@@ -41,10 +41,11 @@
 
 - name: Start concourse
   become: yes
+#  become_user: docker
   environment:
     CONCOURSE_EXTERNAL_URL: "http://$(hostname --ip-address):8080"
   docker_service:
-    project_src: "."
+    project_src: "/home/ec2-user"
 
 - name: Save host name
   shell: hostname --ip-address > ./devops-demo/concourse/provision/.aws_host

@@ -13,18 +13,12 @@
     name: ec2-user
     groups: docker
     append: yes
-#  register: add_group
 
-  #  when: add_group|changed
-
-#- name: Add the ec2-user to the docker group
-#  become: yes
-#  shell: usermod -a -G docker ec2-user
-#  notify: restart docker
-
-#- name: restart docker
-#  become: yes
-#  service: name=docker state=restarted enabled=yes
+- name: Create docker user
+  become: yes
+  user:
+    name: docker
+    groups: docker
 
 #- name: Install docker compose
 #  become: yes

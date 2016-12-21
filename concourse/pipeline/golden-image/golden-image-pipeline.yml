@@ -1,0 +1,33 @@
+---
+#resource_types:
+#- name: packer
+#  type: docker-image
+#  source:
+#    repository: jdub/packer-resource
+
+
+resources:
+- name: resource-app
+  type: git
+  source:
+    uri: https://github.com/dimapod/devops-demo.git
+
+
+jobs:
+- name: job-test-app
+  public: true
+  serial: true
+  plan:
+  - get: resource-app
+  - task: test
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: busybox}
+      run:
+        path: resource-app/concourse/pipeline/golden-image/show_env_var.sh
+    params:
+      BLOB_VERSION: {{blob-version}}
+
+
