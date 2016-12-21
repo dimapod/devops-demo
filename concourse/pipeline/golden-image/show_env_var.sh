@@ -1,3 +1,3 @@
 #!/bin/sh
 
-echo "Hello ${BLOB_VERSION}    "
+echo "Hello ${BLOB_VERSION}"

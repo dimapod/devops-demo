@@ -24,10 +24,15 @@ jobs:
       platform: linux
       image_resource:
         type: docker-image
-        source: {repository: busybox}
+        source:
+          repository: xebiafrance/packer-ansible
+          tag: '2.2.0'
+      inputs:
+        - name: resource-app
       run:
-        path: resource-app/concourse/pipeline/golden-image/show_env_var.sh
+        path: resource-app/concourse/pipeline/golden-image/play-packer.sh
     params:
-      BLOB_VERSION: {{blob-version}}
+      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
 
 
