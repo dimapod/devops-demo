@@ -10,7 +10,7 @@ resources:
   source:
     bucket: dpo-devops
     region_name: eu-central-1
-    versioned_file: base-golden-ami-(.*).txt
+    regexp: base-golden-ami-(.*).txt
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
@@ -29,6 +29,7 @@ jobs:
         source:
           repository: busybox
       inputs:
+        - name: resource-app
         - name: golden-ami-s3
       run:
         path: resource-app/concourse/pipeline/test/play.sh
