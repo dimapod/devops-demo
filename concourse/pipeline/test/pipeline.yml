@@ -32,6 +32,8 @@ jobs:
       inputs:
         - name: resource-app
         - name: golden-ami-s3
+      outputs:
+        - name: golden-application-image
       run:
         path: resource-app/concourse/pipeline/test/play.sh
     params:
