@@ -77,7 +77,6 @@
     [
       {
         "type": "vagrant",
-        "except": ["googlecompute", "digitalocean"],
         "compression_level": "9",
         "output": "{{.Provider}}/{{ user `PACKER_BOX_NAME` }}-appserver_{{.Provider}}.box"
       }

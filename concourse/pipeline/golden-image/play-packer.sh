@@ -2,7 +2,7 @@
 
 echo "AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}"
 
-cd golden-image/base-image
+cd resource-app/golden-image/base-image
 
 packer build -only amazon-ebs packer-base-image.json | tee output.txt
 
