@@ -27,7 +27,8 @@ jobs:
       image_resource:
         type: docker-image
         source:
-          repository: busybox
+          repository: xebiafrance/packer-ansible
+          tag: '1.9.4'
       inputs:
         - name: resource-app
         - name: golden-ami-s3
