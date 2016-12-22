@@ -11,6 +11,7 @@ resources:
 #  source:
 #    bucket: dpo-devops
 #    key: current-version
+#    region_name: eu-central-1
 #    access_key_id: {{s3-access-key-id}}
 #    secret_access_key: {{s3-secret-access-key}}
 #    initial_version: 0.1.0

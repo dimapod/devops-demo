@@ -11,4 +11,4 @@
 
 - name: Set Concourse GOLDEN-IMAGE Pipeline
   become: yes
-  shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline golden-image $(pwd)/devops-demo/concourse/pipeline/golden-image/golden-image.yml
+  shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline golden-image $(pwd)/devops-demo/concourse/pipeline/golden-image/pipeline.yml
