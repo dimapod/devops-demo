@@ -1,17 +1,9 @@
 ---
-#resource_types:
-#- name: packer
-#  type: docker-image
-#  source:
-#    repository: jdub/packer-resource
-
-
 resources:
 - name: resource-app
   type: git
   source:
     uri: https://github.com/dimapod/devops-demo.git
-
 
 jobs:
 - name: job-test-app
