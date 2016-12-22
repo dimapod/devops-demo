@@ -33,23 +33,23 @@ resources:
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
-#jobs:
-#- name: job-test-app
-#  public: true
-#  serial: true
-#  plan:
-#  - get: resource-app
-#    trigger: true
-#
-#  - task: app-tests
-#    file: resource-app/concourse/pipeline/build/task_run_tests.yml
-#
-##  - task: build-application-image
-##    file: resource-app/concourse/pipeline/build/task_build_application_image.yml
-#
-#  - put: my-product-rc
-#    params:
-#      {file: gs-bundle/target/gs-spring-boot-*.jar}
+jobs:
+- name: job-test-app
+  public: true
+  serial: true
+  plan:
+  - get: resource-app
+    trigger: true
+
+  - task: app-tests
+    file: resource-app/concourse/pipeline/build/task_run_tests.yml
+
+#  - task: build-application-image
+#    file: resource-app/concourse/pipeline/build/task_build_application_image.yml
+
+  - put: my-product-rc
+    params:
+      {file: gs-bundle/target/gs-spring-boot-*.jar}
 
 
 - name: application-image
@@ -58,6 +58,7 @@ resources:
   plan:
   - get: resource-app
   - get: golden-ami-s3
+    trigger: true
   - get: my-product-rc
     passed: [job-test-app]
     trigger: true

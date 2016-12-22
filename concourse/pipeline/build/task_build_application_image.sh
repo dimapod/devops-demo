@@ -7,7 +7,8 @@ echo "Using golden base image: ${AMI}"
 export AMI_BASE_IMAGE=${AMI}
 
 # Copy built artifact
-cp my-product-rc/target/gs-spring-boot-*.jar resource-app/golden-image/application-image/gs-spring-boot/target/
+mkdir -p resource-app/gs-spring-boot/target
+cp my-product-rc/target/gs-spring-boot-*.jar resource-app/gs-spring-boot/target/
 
 cd resource-app/golden-image/application-image
 
