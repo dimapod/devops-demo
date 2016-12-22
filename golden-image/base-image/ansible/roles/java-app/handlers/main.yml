@@ -1,0 +1,6 @@
+---
+- name: start app
+  service:
+    name: gs-spring-app
+    state: restarted
+    enabled: yes

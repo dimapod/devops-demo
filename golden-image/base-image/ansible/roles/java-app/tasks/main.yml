@@ -1,0 +1,21 @@
+---
+
+- user:
+    name: "{{ user }}"
+    createhome: yes
+
+- name: Copy application to host
+  copy:
+    src: ../gs-spring-boot/target/{{ app_package }}
+    dest: /home/{{ user }}
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "u=rwx,g=rwx,o=rwx"
+  notify: start app
+
+- name: Create service
+  file:
+    src: /home/{{ user }}/{{ app_package }}
+    dest: /etc/init.d/gs-spring-app
+    state: link
+  notify: start app

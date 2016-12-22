@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+    - nginx
+    - java8-oracle
+#    - java-app

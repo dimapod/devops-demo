@@ -7,7 +7,7 @@
 
 - name: Set Concourse BUILD Pipeline
   become: yes
-  shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline devops $(pwd)/devops-demo/concourse/pipeline/build/pipeline.yml
+  shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline build $(pwd)/devops-demo/concourse/pipeline/build/pipeline.yml
 
 - name: Set Concourse GOLDEN-IMAGE Pipeline
   become: yes

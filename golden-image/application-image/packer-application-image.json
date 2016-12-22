@@ -1,0 +1,38 @@
+{
+  "variables": {
+      "PACKER_OS_FLAVOUR": "ubuntu",
+      "PACKER_BOX_NAME": "ubuntu-14.04.4-server-amd64",
+      "AWS_ACCESS_KEY_ID": "{{env `AWS_ACCESS_KEY_ID`}}",
+      "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+      "DIGITALOCEAN_API_TOKEN": "{{env `DIGITALOCEAN_API_TOKEN`}}"
+    },
+    "builders": [
+      {
+        "type": "amazon-ebs",
+        "access_key": "{{ user `AWS_ACCESS_KEY_ID` }}",
+        "secret_key": "{{ user `AWS_SECRET_ACCESS_KEY` }}",
+        "region": "eu-central-1",
+        "source_ami": "ami-9c09f0f3",
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "packer-app-server {{timestamp}}"
+      }
+  ],
+
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "ansible/site.yml"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "vagrant",
+        "except": ["googlecompute", "digitalocean"],
+        "compression_level": "9",
+        "output": "{{.Provider}}/{{ user `PACKER_BOX_NAME` }}-appserver_{{.Provider}}.box"
+      }
+    ]
+  ]
+}

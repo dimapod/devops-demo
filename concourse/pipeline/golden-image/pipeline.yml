@@ -10,7 +10,7 @@ resources:
   source:
     bucket: dpo-devops
     region_name: eu-central-1
-    versioned_file: golden-ami.txt
+    versioned_file: base-golden-ami-(.*).txt
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
@@ -39,7 +39,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
   - put: golden-ami-s3
     params:
-      {file: output/golden-ami.txt}
+      {file: output/base-golden-ami-*.txt}
 
 
 
