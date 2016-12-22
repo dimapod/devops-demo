@@ -10,10 +10,10 @@ image_resource:
 inputs:
   - name: resource-app
   - name: gs-bundle
+  - name: golden-ami-s3
 
 run:
-  path: ls
-  args: ['-l']
+  path: resource-app/concourse/pipeline/build/task_build_application_image.sh
 
 outputs:
   - name: golden-application-image

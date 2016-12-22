@@ -24,6 +24,15 @@ resources:
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
+- name: application-golden-ami-s3
+  type: s3
+  source:
+    bucket: dpo-devops
+    region_name: eu-central-1
+    versioned_file: application-golden-ami.txt
+    access_key_id: {{s3-access-key-id}}
+    secret_access_key: {{s3-secret-access-key}}
+
 jobs:
 - name: job-test-app
   public: true
@@ -32,11 +41,38 @@ jobs:
   - get: golden-ami-s3
   - get: resource-app
     trigger: true
+
   - task: app-tests
     file: resource-app/concourse/pipeline/build/task_run_tests.yml
-  - task: build-application-image
-    file: resource-app/concourse/pipeline/build/task_build_application_image.yml
+
+#  - task: build-application-image
+#    file: resource-app/concourse/pipeline/build/task_build_application_image.yml
+
+  - task: application-image
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: xebiafrance/packer-ansible
+          tag: '1.9.4'
+      inputs:
+        - name: resource-app
+        - name: gs-bundle
+        - name: golden-ami-s3
+      outputs:
+        - name: golden-application-image
+      run:
+        path: resource-app/concourse/pipeline/build/task_build_application_image.sh
+    params:
+      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+
+  - put: application-golden-ami-s3
+    params:
+      {file: golden-application-image/application-golden-ami.txt}
   - put: my-product-rc
     params:
       {file: gs-bundle/target/gs-spring-boot-*.jar}
+
 

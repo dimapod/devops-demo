@@ -14,6 +14,15 @@ resources:
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
+- name: application-golden-ami-s3
+  type: s3
+  source:
+    bucket: dpo-devops
+    region_name: eu-central-1
+    versioned_file: application-golden-ami.txt
+    access_key_id: {{s3-access-key-id}}
+    secret_access_key: {{s3-secret-access-key}}
+
 jobs:
 - name: build-application-image
   public: true
@@ -39,6 +48,9 @@ jobs:
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+  - put: application-golden-ami-s3
+    params:
+      {file: golden-application-image/application-golden-ami.txt}
 
 
 
