@@ -9,7 +9,7 @@ inputs:
 - name: resource-app
 
 run:
-  path: resource-app/concourse/pipeline/task_run_tests.sh
+  path: resource-app/concourse/pipeline/build/task_run_tests.sh
 
 outputs:
   - name: gs-bundle

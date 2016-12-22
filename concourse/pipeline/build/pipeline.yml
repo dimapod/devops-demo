@@ -32,7 +32,7 @@ jobs:
   - get: resource-app
     trigger: true
   - task: app-tests
-    file: resource-app/concourse/pipeline/task_run_tests.yml
+    file: resource-app/concourse/pipeline/build/task_run_tests.yml
   - put: my-product-rc
     params:
       {file: gs-bundle/target/gs-spring-boot-*.jar}
