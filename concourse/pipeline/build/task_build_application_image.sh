@@ -9,7 +9,6 @@ export AMI_BASE_IMAGE=${AMI}
 # Copy built artifact
 cp my-product-rc/target/gs-spring-boot-*.jar resource-app/golden-image/application-image/gs-spring-boot/target/
 
-
 cd resource-app/golden-image/application-image
 
 packer build -only amazon-ebs packer-application-image.json | tee output.txt
