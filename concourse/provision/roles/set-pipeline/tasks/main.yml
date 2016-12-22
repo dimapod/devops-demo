@@ -5,7 +5,10 @@
     src: ~/s3-credentials.yml
     dest: .
 
-- name: Set Concourse Pipeline
+- name: Set Concourse BUILD Pipeline
   become: yes
-#  become_user: docker
   shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline devops $(pwd)/devops-demo/concourse/pipeline/build/pipeline.yml
+
+- name: Set Concourse GOLDEN-IMAGE Pipeline
+  become: yes
+  shell: ./devops-demo/concourse/provision/fly-docker.sh set-pipeline golden-image $(pwd)/devops-demo/concourse/pipeline/golden-image/golden-image.yml

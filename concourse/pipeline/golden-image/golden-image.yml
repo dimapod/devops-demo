@@ -6,12 +6,12 @@ resources:
     uri: https://github.com/dimapod/devops-demo.git
 
 jobs:
-- name: job-test-app
+- name: build-golden-image
   public: true
   serial: true
   plan:
   - get: resource-app
-  - task: test
+  - task: build
     config:
       platform: linux
       image_resource:
@@ -21,6 +21,8 @@ jobs:
           tag: '1.9.4'
       inputs:
         - name: resource-app
+      outputs:
+        - name: output
       run:
         path: resource-app/concourse/pipeline/golden-image/play-packer.sh
     params:
