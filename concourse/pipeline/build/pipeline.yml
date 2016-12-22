@@ -38,7 +38,6 @@ jobs:
   public: true
   serial: true
   plan:
-  - get: golden-ami-s3
   - get: resource-app
     trigger: true
 
@@ -48,7 +47,22 @@ jobs:
 #  - task: build-application-image
 #    file: resource-app/concourse/pipeline/build/task_build_application_image.yml
 
-  - task: application-image
+  - put: my-product-rc
+    params:
+      {file: gs-bundle/target/gs-spring-boot-*.jar}
+
+
+- name: application-image
+  public: true
+  serial: true
+  plan:
+  - get: resource-app
+  - get: golden-ami-s3
+  - get: my-product-rc
+    passed: [job-test-app]
+    trigger: true
+
+  - task: build
     config:
       platform: linux
       image_resource:
@@ -58,7 +72,7 @@ jobs:
           tag: '1.9.4'
       inputs:
         - name: resource-app
-        - name: gs-bundle
+        - name: my-product-rc
         - name: golden-ami-s3
       outputs:
         - name: golden-application-image
@@ -71,8 +85,3 @@ jobs:
   - put: application-golden-ami-s3
     params:
       {file: golden-application-image/application-golden-ami.txt}
-  - put: my-product-rc
-    params:
-      {file: gs-bundle/target/gs-spring-boot-*.jar}
-
-
