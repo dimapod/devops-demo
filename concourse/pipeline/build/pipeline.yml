@@ -6,16 +6,6 @@ resources:
     uri: https://github.com/dimapod/devops-demo.git
     paths: [gs-spring-boot/*]
 
-#- name: version
-#  type: semver
-#  source:
-#    bucket: dpo-devops
-#    key: current-version
-#    region_name: eu-central-1
-#    access_key_id: {{s3-access-key-id}}
-#    secret_access_key: {{s3-secret-access-key}}
-#    initial_version: 0.1.0
-
 - name: my-product-rc
   type: s3
   source:
@@ -25,15 +15,27 @@ resources:
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
+- name: golden-ami-s3
+  type: s3
+  source:
+    bucket: dpo-devops
+    region_name: eu-central-1
+    versioned_file: base-golden-ami.txt
+    access_key_id: {{s3-access-key-id}}
+    secret_access_key: {{s3-secret-access-key}}
+
 jobs:
 - name: job-test-app
   public: true
   serial: true
   plan:
+  - get: golden-ami-s3
   - get: resource-app
     trigger: true
   - task: app-tests
     file: resource-app/concourse/pipeline/build/task_run_tests.yml
+  - task: build-application-image
+    file: resource-app/concourse/pipeline/build/task_build_application_image.yml
   - put: my-product-rc
     params:
       {file: gs-bundle/target/gs-spring-boot-*.jar}
