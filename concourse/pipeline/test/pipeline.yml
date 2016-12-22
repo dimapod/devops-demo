@@ -27,8 +27,7 @@ jobs:
       image_resource:
         type: docker-image
         source:
-          repository: xebiafrance/packer-ansible
-          tag: '1.9.4'
+          repository: busybox
       inputs:
         - name: golden-ami-s3
       run:
@@ -36,9 +35,6 @@ jobs:
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
-  - put: golden-ami-s3
-    params:
-      {file: output/base-golden-ami-*.txt}
 
 
 
