@@ -14,7 +14,7 @@ resources:
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
-- name: golden-ami-s3
+- name: base-image-s3
   type: s3
   source:
     bucket: dpo-devops
@@ -23,7 +23,7 @@ resources:
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
-- name: application-golden-ami-s3
+- name: application-image-s3
   type: s3
   source:
     bucket: dpo-devops
@@ -53,7 +53,7 @@ jobs:
   serial: true
   plan:
   - get: devops-infra
-  - get: golden-ami-s3
+  - get: base-image-s3
     trigger: true
   - get: application-rc
     passed: [QA]
@@ -70,7 +70,7 @@ jobs:
       inputs:
         - name: devops-infra
         - name: application-rc
-        - name: golden-ami-s3
+        - name: base-image-s3
       outputs:
         - name: golden-application-image
       run:
@@ -79,6 +79,6 @@ jobs:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
 
-  - put: application-golden-ami-s3
+  - put: application-image-s3
     params:
       {file: golden-application-image/application-image-id}

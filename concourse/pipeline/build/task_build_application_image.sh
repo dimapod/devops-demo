@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 # Prepare Base AMI ID
-AMI=$(head -n 1 golden-ami-s3/base-image-id)
-VERSION=$(head -n 1 golden-ami-s3/version)
+AMI=$(head -n 1 base-image-s3/base-image-id)
+VERSION=$(head -n 1 base-image-s3/version)
 echo "Using golden base image: ${AMI}"
 export AMI_BASE_IMAGE=${AMI}
 
