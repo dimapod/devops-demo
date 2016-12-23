@@ -1,5 +1,6 @@
 variable "access_key" {}
 variable "secret_key" {}
+variable "application_ami" {}
 
 variable "project" {
   type = "string"
@@ -28,9 +29,6 @@ variable "private_subnet" {
   type = "string"
 }
 
-variable "application_ami" {
-  type = "string"
-}
 
 variable "amis" {
   type = "map"
