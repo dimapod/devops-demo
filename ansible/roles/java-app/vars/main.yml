@@ -1,6 +1,0 @@
----
-
-app_name: gs-spring-boot
-app_version: 0.1.0
-app_package: '{{ app_name }}-{{ app_version }}.jar'
-user: gs
