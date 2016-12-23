@@ -2,6 +2,7 @@ provider "aws" {
   access_key = "${var.access_key}"
   secret_key = "${var.secret_key}"
   region = "${var.region}"
+  application_ami = "${var.application_ami}"
 }
 
 resource "aws_key_pair" "default" {
@@ -24,7 +25,8 @@ resource "aws_subnet" "default" {
 resource "aws_instance" "gs-spring" {
   //count = "${var.node_count}"
   key_name = "${var.key_name}"
-  ami = "${lookup(var.amis, var.region)}"
+  //ami = "${lookup(var.amis, var.region)}"
+  ami = "${var.application_ami}"
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.default.id}"
 

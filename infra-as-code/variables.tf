@@ -28,6 +28,10 @@ variable "private_subnet" {
   type = "string"
 }
 
+variable "application_ami" {
+  type = "string"
+}
+
 variable "amis" {
   type = "map"
   default = {
