@@ -4,7 +4,6 @@ resources:
   type: git
   source:
     uri: https://github.com/dimapod/devops-demo.git
-    paths: [gs-spring-boot/*]
 
 - name: my-product-rc
   type: s3
