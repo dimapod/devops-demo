@@ -1,6 +1,6 @@
 ---
 resources:
-- name: resource-app
+- name: devops-infra
   type: git
   source:
     uri: https://github.com/dimapod/devops-demo.git
@@ -19,7 +19,7 @@ resources:
   source:
     bucket: dpo-devops
     region_name: eu-central-1
-    versioned_file: base-golden-ami.txt
+    versioned_file: base-image-id
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
@@ -33,18 +33,15 @@ resources:
     secret_access_key: {{s3-secret-access-key}}
 
 jobs:
-- name: job-test-app
+- name: QA
   public: true
   serial: true
   plan:
-  - get: resource-app
+  - get: devops-infra
     trigger: true
 
   - task: app-tests
-    file: resource-app/concourse/pipeline/build/task_run_tests.yml
-
-#  - task: build-application-image
-#    file: resource-app/concourse/pipeline/build/task_build_application_image.yml
+    file: devops-infra/concourse/pipeline/build/task_run_tests.yml
 
   - put: my-product-rc
     params:
@@ -55,11 +52,11 @@ jobs:
   public: true
   serial: true
   plan:
-  - get: resource-app
+  - get: devops-infra
   - get: golden-ami-s3
     trigger: true
   - get: my-product-rc
-    passed: [job-test-app]
+    passed: [QA]
     trigger: true
 
   - task: build
@@ -71,13 +68,13 @@ jobs:
           repository: xebiafrance/packer-ansible
           tag: '1.9.4'
       inputs:
-        - name: resource-app
+        - name: devops-infra
         - name: my-product-rc
         - name: golden-ami-s3
       outputs:
         - name: golden-application-image
       run:
-        path: resource-app/concourse/pipeline/build/task_build_application_image.sh
+        path: devops-infra/concourse/pipeline/build/task_build_application_image.sh
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}

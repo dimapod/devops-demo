@@ -63,7 +63,7 @@
         "source_ami": "ami-9c09f0f3",
         "instance_type": "t2.micro",
         "ssh_username": "ubuntu",
-        "ami_name": "packer-app-server {{timestamp}}"
+        "ami_name": "dpo-base-image-{{timestamp}}"
       }
   ],
 
@@ -78,7 +78,7 @@
       {
         "type": "vagrant",
         "compression_level": "9",
-        "output": "{{.Provider}}/{{ user `PACKER_BOX_NAME` }}-appserver_{{.Provider}}.box"
+        "output": "{{.Provider}}/{{ user `PACKER_BOX_NAME` }}-base_{{.Provider}}.box"
       }
     ]
   ]

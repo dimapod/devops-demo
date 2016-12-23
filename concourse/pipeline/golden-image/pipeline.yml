@@ -1,25 +1,25 @@
 ---
 resources:
-- name: resource-app
+- name: devops-infra
   type: git
   source:
     uri: https://github.com/dimapod/devops-demo.git
 
-- name: golden-ami-s3
+- name: base-image-id
   type: s3
   source:
     bucket: dpo-devops
     region_name: eu-central-1
-    versioned_file: base-golden-ami.txt
+    versioned_file: base-image-id
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
 jobs:
-- name: build-golden-image
+- name: base-image
   public: true
   serial: true
   plan:
-  - get: resource-app
+  - get: devops-infra
   - task: build
     config:
       platform: linux
@@ -29,17 +29,17 @@ jobs:
           repository: xebiafrance/packer-ansible
           tag: '1.9.4'
       inputs:
-        - name: resource-app
+        - name: devops-infra
       outputs:
         - name: output
       run:
-        path: resource-app/concourse/pipeline/golden-image/play-packer.sh
+        path: devops-infra/concourse/pipeline/golden-image/play-packer.sh
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
-  - put: golden-ami-s3
+  - put: base-image-id
     params:
-      {file: output/base-golden-ami.txt}
+      {file: output/base-image-id}
 
 
 

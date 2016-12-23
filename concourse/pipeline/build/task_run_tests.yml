@@ -6,10 +6,10 @@ image_resource:
   source: {repository: maven, tag: 3.3.9-alpine}
 
 inputs:
-- name: resource-app
+- name: devops-infra
 
 run:
-  path: resource-app/concourse/pipeline/build/task_run_tests.sh
+  path: devops-infra/concourse/pipeline/build/task_run_tests.sh
 
 outputs:
   - name: gs-bundle
