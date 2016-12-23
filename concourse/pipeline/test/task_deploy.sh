@@ -15,5 +15,6 @@ cd devops-infra/infra-as-code
 
 terraform -v
 terraform plan
+terraform apply
 
 cp terraform.tfstate ../../infra-description/
