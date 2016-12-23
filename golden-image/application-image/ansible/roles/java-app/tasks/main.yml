@@ -6,7 +6,7 @@
 
 - name: Copy application to host
   copy:
-    src: ../gs-spring-boot/target/{{ app_package }}
+    src: ../../../gs-spring-boot/target/{{ app_package }}
     dest: /home/{{ user }}
     owner: "{{ user }}"
     group: "{{ user }}"
