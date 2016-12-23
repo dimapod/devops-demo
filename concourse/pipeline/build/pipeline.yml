@@ -5,7 +5,7 @@ resources:
   source:
     uri: https://github.com/dimapod/devops-demo.git
 
-- name: my-product-rc
+- name: application-rc
   type: s3
   source:
     bucket: dpo-devops
@@ -28,7 +28,7 @@ resources:
   source:
     bucket: dpo-devops
     region_name: eu-central-1
-    versioned_file: application-golden-ami.txt
+    versioned_file: application-image-id
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
@@ -43,7 +43,7 @@ jobs:
   - task: app-tests
     file: devops-infra/concourse/pipeline/build/task_run_tests.yml
 
-  - put: my-product-rc
+  - put: application-rc
     params:
       {file: gs-bundle/target/gs-spring-boot-*.jar}
 
@@ -55,7 +55,7 @@ jobs:
   - get: devops-infra
   - get: golden-ami-s3
     trigger: true
-  - get: my-product-rc
+  - get: application-rc
     passed: [QA]
     trigger: true
 
@@ -69,7 +69,7 @@ jobs:
           tag: '1.9.4'
       inputs:
         - name: devops-infra
-        - name: my-product-rc
+        - name: application-rc
         - name: golden-ami-s3
       outputs:
         - name: golden-application-image
@@ -81,4 +81,4 @@ jobs:
 
   - put: application-golden-ami-s3
     params:
-      {file: golden-application-image/application-golden-ami.txt}
+      {file: golden-application-image/application-image-id}

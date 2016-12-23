@@ -8,7 +8,7 @@ export AMI_BASE_IMAGE=${AMI}
 
 # Copy built artifact
 mkdir -p devops-infra/gs-spring-boot/target
-cp my-product-rc/gs-spring-boot-*.jar devops-infra/gs-spring-boot/target/
+cp application-rc/gs-spring-boot-*.jar devops-infra/gs-spring-boot/target/
 
 cd devops-infra/golden-image/application-image
 
@@ -18,5 +18,5 @@ echo "-----------------------"
 echo "Built image $(tail -2 output.txt | head -1 | awk 'match($0, /ami-.*/) { print substr($0, RSTART, RLENGTH) }')"
 echo "-----------------------"
 
-tail -2 output.txt | head -1 | awk 'match($0, /ami-.*/) { print substr($0, RSTART, RLENGTH) }' > ../../../golden-application-image/application-golden-ami.txt
+tail -2 output.txt | head -1 | awk 'match($0, /ami-.*/) { print substr($0, RSTART, RLENGTH) }' > ../../../golden-application-image/application-image-id
 
