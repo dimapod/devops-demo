@@ -4,7 +4,7 @@ variable "application_ami" {}
 
 variable "project" {
   type = "string"
-  default = "gs-spring"
+  default = "dpo-application"
 }
 
 variable "key_name" {
