@@ -35,12 +35,11 @@ resource "aws_instance" "gs-spring" {
      Project = "${var.project}"
      Owner = "${var.owner}"
   }
-
-  provisioner "local-exec" {
-    command = "echo ${aws_instance.gs-spring.public_ip} > application-ip"
-  }
 }
 
+output "ip" {
+  value = "${aws_instance.gs-spring.public_ip}"
+}
 
 
 

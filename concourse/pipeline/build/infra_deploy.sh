@@ -26,7 +26,9 @@ case "$1" in
     ;;
 esac
 
+# Create application-ip file with current application IP
+terraform output ip > ../../infra-description/application-ip
 
 # Copy current infrastructure description
 cp terraform.tfstate ../../infra-description/
-cp application-ip ../../infra-description/
+
