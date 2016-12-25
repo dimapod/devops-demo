@@ -22,7 +22,7 @@ case "$1" in
         terraform plan
     ;;
     apply)
-        terraform destroy apply
+        terraform apply
     ;;
 esac
 
