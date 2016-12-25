@@ -175,7 +175,8 @@ jobs:
 
   - put: infra-description-s3
     params:
-      {file: infra-description/terraform.tfstate}
+      file: infra-description/terraform.tfstate
   - put: application-ip-s3
     params:
-      {file: infra-description/application-ip}
+      file: infra-description/application-ip
+      acl: public-read

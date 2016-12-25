@@ -9,8 +9,7 @@ variable "project" {
 
 variable "key_name" {
   type = "string"
-  default = "gs-devops"
-  default = "gs-devops"
+  default = "dpo-application"
 }
 
 variable "region" {
