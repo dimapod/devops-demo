@@ -41,8 +41,17 @@ resources:
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
+- name: application-ip-s3
+  type: s3
+  source:
+    bucket: dpo-devops
+    region_name: eu-central-1
+    versioned_file: application-ip
+    access_key_id: {{s3-access-key-id}}
+    secret_access_key: {{s3-secret-access-key}}
 
 jobs:
+# QA: Testing / Build
 - name: QA
   public: true
   serial: true
@@ -58,6 +67,7 @@ jobs:
       {file: gs-bundle/target/gs-spring-boot-*.jar}
 
 
+# QA: Creating application image from base image (aws ami)
 - name: application-image
   public: true
   serial: true
@@ -84,7 +94,7 @@ jobs:
       outputs:
         - name: golden-application-image
       run:
-        path: devops-infra/concourse/pipeline/build/task_build_application_image.sh
+        path: devops-infra/concourse/pipeline/build/build_application_image.sh
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
@@ -93,6 +103,7 @@ jobs:
     params:
       {file: golden-application-image/application-image-id}
 
+# Infrastructure plan
 - name: infra-plan
   serial: true
   public: true
@@ -118,21 +129,22 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/build/task_deploy.sh
+        path: devops-infra/concourse/pipeline/build/infra_deploy.sh
         args: ["plan"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
 
+# Infrastructure apply
 - name: infra-apply
   serial: true
   public: true
   serial_groups: ["infra"]
   plan:
   - get: devops-infra
-  - get: application-image-s3
-    passed: [application-image]
   - get: infra-description-s3
+  - get: application-image-s3
+    passed: [infra-plan]
 
   - task: build
     config:
@@ -148,7 +160,7 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/build/task_deploy.sh
+        path: devops-infra/concourse/pipeline/build/infra_deploy.sh
         args: ["apply"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
@@ -157,3 +169,6 @@ jobs:
   - put: infra-description-s3
     params:
       {file: infra-description/terraform.tfstate}
+  - put: application-ip-s3
+    params:
+      {file: infra-description/application-ip}

@@ -29,3 +29,4 @@ esac
 
 # Copy current infrastructure description
 cp terraform.tfstate ../../infra-description/
+cp application-ip ../../infra-description/

@@ -9,7 +9,7 @@ inputs:
 - name: devops-infra
 
 run:
-  path: devops-infra/concourse/pipeline/build/task_run_tests.sh
+  path: devops-infra/concourse/pipeline/build/run_tests.sh
 
 outputs:
   - name: gs-bundle

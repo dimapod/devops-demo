@@ -61,6 +61,7 @@ jobs:
   - get: devops-infra
   - get: application-image-s3
   - get: infra-description-s3
+    passed: [infra-destroy-plan]
 
   - task: destroy
     config:
