@@ -47,7 +47,7 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh
+        path: devops-infra/concourse/pipeline/destroy-infra/task_stop_infra.sh
         args: ["plan"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
@@ -76,7 +76,7 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh
+        path: devops-infra/concourse/pipeline/destroy-infra/task_stop_infra.sh
         args: ["destroy"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
