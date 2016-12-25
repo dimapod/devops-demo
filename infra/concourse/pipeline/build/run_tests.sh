@@ -4,7 +4,7 @@ echo "Run 'mvn clean install' here ..."
 
 pwd
 
-cd devops-infra/gs-spring-boot/
+cd devops-app/gs-spring-boot/
 
 mvn clean install
 

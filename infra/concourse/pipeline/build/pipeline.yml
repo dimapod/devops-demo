@@ -5,6 +5,12 @@ resources:
   source:
     uri: https://github.com/dimapod/devops-demo.git
 
+- name: devops-app
+  type: git
+  source:
+    uri: https://github.com/dimapod/devops-demo.git
+    paths: ["gs-spring-boot"]
+
 - name: application-rc
   type: s3
   source:
@@ -57,6 +63,7 @@ jobs:
   serial: true
   plan:
   - get: devops-infra
+  - get: devops-app
     trigger: true
 
   - task: app-tests
