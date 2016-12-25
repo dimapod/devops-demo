@@ -22,5 +22,5 @@
 nbactions.xml
 **/nbactions.xml
 
-concourse/local/keys
+**/concourse/**/keys
 .aws_host

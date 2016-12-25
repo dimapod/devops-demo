@@ -60,7 +60,7 @@ jobs:
     trigger: true
 
   - task: app-tests
-    file: devops-infra/concourse/pipeline/build/task_run_tests.yml
+    file: devops-infra/infra/concourse/pipeline/build/task_run_tests.yml
 
   - put: application-rc
     params:
@@ -94,7 +94,7 @@ jobs:
       outputs:
         - name: golden-application-image
       run:
-        path: devops-infra/concourse/pipeline/build/build_application_image.sh
+        path: devops-infra/infra/concourse/pipeline/build/build_application_image.sh
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
@@ -129,7 +129,7 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/build/infra_deploy.sh
+        path: devops-infra/infra/concourse/pipeline/build/infra_deploy.sh
         args: ["plan"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
@@ -160,7 +160,7 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/build/infra_deploy.sh
+        path: devops-infra/infra/concourse/pipeline/build/infra_deploy.sh
         args: ["apply"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}

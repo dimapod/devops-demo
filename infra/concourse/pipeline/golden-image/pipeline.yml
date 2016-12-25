@@ -33,7 +33,7 @@ jobs:
       outputs:
         - name: output
       run:
-        path: devops-infra/concourse/pipeline/golden-image/play-packer.sh
+        path: devops-infra/infra/concourse/pipeline/golden-image/play-packer.sh
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
