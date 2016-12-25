@@ -9,6 +9,10 @@
   become: yes
   shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline golden-image $(pwd)/devops-demo/infra/concourse/pipeline/golden-image/pipeline.yml
 
+- name: Unpause GOLDEN-IMAGE Pipeline
+  become: yes
+  shell: ./devops-demo/infra/concourse/provision/fly-docker.sh unpause golden-image
+
 - name: Set Concourse BUILD Pipeline
   become: yes
   shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline build $(pwd)/devops-demo/infra/concourse/pipeline/build/pipeline.yml
@@ -16,3 +20,7 @@
 - name: Set Concourse DESTROY-INFRA Pipeline
   become: yes
   shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline destroy-infra $(pwd)/devops-demo/infra/concourse/pipeline/destroy-infra/pipeline.yml
+
+- name: Unpause DESTROY-INFRA Pipeline
+  become: yes
+  shell: ./devops-demo/infra/concourse/provision/fly-docker.sh unpause destroy-infra

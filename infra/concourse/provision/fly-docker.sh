@@ -28,7 +28,7 @@ doSetPipeline() {
         -v ${PIPELINE_FILE}:/home/pipeline.yml \
         -v $(pwd)/s3-credentials.yml:/s3-credentials.yml \
         xebiafrance/fly \
-        "${LOGIN_CMD}; ${SET_PIPELINE_CMD}; ${UNPAUSE_PIPELINE_CMD}"
+        "${LOGIN_CMD}; ${SET_PIPELINE_CMD};"
 }
 
 # DESTROY PIPELINE
@@ -41,11 +41,24 @@ doDestroyPipeline() {
     docker run --rm xebiafrance/fly "${LOGIN_CMD}; ${DESTROY_PIPELINE_CMD}"
 }
 
+# UNPAUSE PIPELINE
+doUnpausePipeline() {
+    setVars $1
+
+    echo "\$docker> ${LOGIN_CMD}"
+    echo "\$docker> ${DESTROY_PIPELINE_CMD}"
+
+    docker run --rm xebiafrance/fly "${LOGIN_CMD}; ${UNPAUSE_PIPELINE_CMD}"
+}
+
 case "$1" in
     set-pipeline)
         doSetPipeline $2 $3
     ;;
     destroy-pipeline)
         doDestroyPipeline $2
+    ;;
+    unpause)
+        doUnpausePipeline $2
     ;;
 esac

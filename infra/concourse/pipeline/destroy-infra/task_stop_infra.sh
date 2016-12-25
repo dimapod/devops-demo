@@ -27,4 +27,4 @@ case "$1" in
 esac
 
 # Copy current infrastructure description
-cp terraform.tfstate ../../infra-description/
+cp terraform.tfstate ../../../infra-description/
