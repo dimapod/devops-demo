@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
     aws.ami = "ami-f9619996"
 
     aws.tags = {
-      'Name' => 'DPO Concourse'
+      'Name' => 'dpo-concourse'
     }
 
     override.ssh.username = "ec2-user"

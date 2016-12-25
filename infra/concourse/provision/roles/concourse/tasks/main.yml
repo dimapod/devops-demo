@@ -48,6 +48,6 @@
     project_src: "/home/ec2-user"
 
 - name: Save host name
-  shell: hostname --ip-address > ./devops-demo/concourse/provision/.aws_host
+  shell: hostname --ip-address > ./devops-demo/infra/concourse/provision/.aws_host
   args:
-    creates: ./devops-demo/concourse/provision/.aws_host
+    creates: ./devops-demo/infra/concourse/provision/.aws_host
