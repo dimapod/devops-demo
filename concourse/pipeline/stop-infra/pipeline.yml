@@ -33,7 +33,7 @@ jobs:
   - get: application-image-s3
   - get: infra-description-s3
 
-  - task: build
+  - task: plan
     config:
       platform: linux
       image_resource:
@@ -62,7 +62,7 @@ jobs:
   - get: application-image-s3
   - get: infra-description-s3
 
-  - task: build
+  - task: destroy
     config:
       platform: linux
       image_resource:

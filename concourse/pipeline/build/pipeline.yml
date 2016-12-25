@@ -93,7 +93,7 @@ jobs:
     params:
       {file: golden-application-image/application-image-id}
 
-- name: infrastracture
+- name: infra-plan
   serial: true
   public: true
   serial_groups: ["infra"]
@@ -119,6 +119,37 @@ jobs:
         - name: infra-description
       run:
         path: devops-infra/concourse/pipeline/build/task_deploy.sh
+        args: ["plan"]
+    params:
+      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+
+- name: infra-apply
+  serial: true
+  public: true
+  serial_groups: ["infra"]
+  plan:
+  - get: devops-infra
+  - get: application-image-s3
+    passed: [application-image]
+  - get: infra-description-s3
+
+  - task: build
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: uzyexe/terraform
+      inputs:
+        - name: devops-infra
+        - name: application-image-s3
+        - name: infra-description-s3
+      outputs:
+        - name: infra-description
+      run:
+        path: devops-infra/concourse/pipeline/build/task_deploy.sh
+        args: ["apply"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}

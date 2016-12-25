@@ -16,8 +16,16 @@ export TF_VAR_application_ami=${AMI}
 
 # Plan/Apply terraform
 cd devops-infra/infra-as-code
-terraform plan
-terraform apply
+
+case "$1" in
+    plan)
+        terraform plan
+    ;;
+    apply)
+        terraform destroy apply
+    ;;
+esac
+
 
 # Copy current infrastructure description
 cp terraform.tfstate ../../infra-description/
