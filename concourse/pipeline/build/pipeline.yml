@@ -99,6 +99,7 @@ jobs:
   - get: application-image-s3
     passed: [application-image]
     trigger: true
+  - get: infra-description-s3
 
   - task: build
     config:
@@ -110,6 +111,7 @@ jobs:
       inputs:
         - name: devops-infra
         - name: application-image-s3
+        - name: infra-description-s3
       outputs:
         - name: infra-description
       run:

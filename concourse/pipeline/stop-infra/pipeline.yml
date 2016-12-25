@@ -24,12 +24,13 @@ resources:
     secret_access_key: {{s3-secret-access-key}}
 
 jobs:
-- name: infrastracture
+- name: stop-infrastracture
   public: true
   serial: true
   plan:
   - get: devops-infra
   - get: application-image-s3
+  - get: infra-description-s3
 
   - task: build
     config:
@@ -41,10 +42,11 @@ jobs:
       inputs:
         - name: devops-infra
         - name: application-image-s3
+        - name: infra-description-s3
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/test/task_deploy.sh
+        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
