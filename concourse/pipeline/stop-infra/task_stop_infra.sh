@@ -17,8 +17,15 @@ set | grep TF_VAR
 
 # Destroy infra
 cd devops-infra/infra-as-code
-terraform plan --destroy
-terraform destroy
+
+case "$1" in
+    plan)
+        terraform plan --destroy
+    ;;
+    destroy)
+        terraform destroy -force
+    ;;
+esac
 
 # Copy current infrastructure description
 cp terraform.tfstate ../../infra-description/

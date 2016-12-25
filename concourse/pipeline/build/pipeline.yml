@@ -94,6 +94,9 @@ jobs:
       {file: golden-application-image/application-image-id}
 
 - name: infrastracture
+  serial: true
+  public: true
+  serial_groups: ["infra"]
   plan:
   - get: devops-infra
   - get: application-image-s3

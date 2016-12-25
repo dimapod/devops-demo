@@ -24,9 +24,10 @@ resources:
     secret_access_key: {{s3-secret-access-key}}
 
 jobs:
-- name: stop-infrastracture
+- name: infra-destroy-plan
   public: true
   serial: true
+  serial_groups: ["infra"]
   plan:
   - get: devops-infra
   - get: application-image-s3
@@ -46,7 +47,39 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh
+        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh plan
+    params:
+      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+
+  - put: infra-description-s3
+    params:
+      {file: infra-description/terraform.tfstate}
+
+- name: infra-destroy-apply
+  public: true
+  serial: true
+  serial_groups: ["infra"]
+  plan:
+  - get: devops-infra
+  - get: application-image-s3
+  - get: infra-description-s3
+
+  - task: build
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: uzyexe/terraform
+      inputs:
+        - name: devops-infra
+        - name: application-image-s3
+        - name: infra-description-s3
+      outputs:
+        - name: infra-description
+      run:
+        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh destroy
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
