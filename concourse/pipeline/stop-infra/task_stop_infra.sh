@@ -13,7 +13,6 @@ echo "Using application image: ${AMI}"
 export TF_VAR_access_key=${AWS_ACCESS_KEY_ID}
 export TF_VAR_secret_key=${AWS_SECRET_ACCESS_KEY}
 export TF_VAR_application_ami=${AMI}
-set | grep TF_VAR
 
 # Destroy infra
 cd devops-infra/infra-as-code

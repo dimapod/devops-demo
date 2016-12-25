@@ -47,16 +47,13 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh plan
+        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh
+        args: ["plan"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
 
-  - put: infra-description-s3
-    params:
-      {file: infra-description/terraform.tfstate}
-
-- name: infra-destroy-apply
+- name: infra-destroy
   public: true
   serial: true
   serial_groups: ["infra"]
@@ -79,7 +76,8 @@ jobs:
       outputs:
         - name: infra-description
       run:
-        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh destroy
+        path: devops-infra/concourse/pipeline/stop-infra/task_stop_infra.sh
+        args: ["destroy"]
     params:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
