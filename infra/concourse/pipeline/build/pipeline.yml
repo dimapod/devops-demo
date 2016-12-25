@@ -16,7 +16,7 @@ resources:
   source:
     bucket: dpo-devops
     region_name: eu-central-1
-    regexp: gs-spring-boot-(.*).jar
+    versioned_file: gs-spring-boot-0.1.0.jar
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
@@ -58,7 +58,7 @@ resources:
 
 jobs:
 # QA: Testing / Build
-- name: QA
+- name: build-app
   public: true
   serial: true
   plan:
@@ -71,10 +71,10 @@ jobs:
 
   - put: application-rc
     params:
-      {file: gs-bundle/target/gs-spring-boot-*.jar}
+      {file: gs-bundle/target/gs-spring-boot-0.1.0.jar}
 
 
-# QA: Creating application image from base image (aws ami)
+# Creating application image from base image (aws ami)
 - name: application-image
   public: true
   serial: true
@@ -83,7 +83,7 @@ jobs:
   - get: base-image-s3
     trigger: true
   - get: application-rc
-    passed: [QA]
+    passed: [build-app]
     trigger: true
 
   - task: build
