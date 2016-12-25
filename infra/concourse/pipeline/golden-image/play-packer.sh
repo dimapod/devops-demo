@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd devops-infra/infra/golden-image/base-image
+cd devops-code/infra/golden-image/base-image
 
 packer build -only amazon-ebs packer-base-image.json | tee output.txt
 

@@ -5,6 +5,12 @@ resources:
   source:
     uri: https://github.com/dimapod/devops-demo.git
 
+- name: devops-code
+  type: git
+  source:
+    uri: https://github.com/dimapod/devops-demo.git
+    paths: ["infra/golden-image/base-image"]
+
 - name: base-image-id
   type: s3
   source:
@@ -20,6 +26,8 @@ jobs:
   serial: true
   plan:
   - get: devops-infra
+  - get: devops-code
+    trigger: true
   - task: build
     config:
       platform: linux
@@ -30,6 +38,7 @@ jobs:
           tag: '1.9.4'
       inputs:
         - name: devops-infra
+        - name: devops-code
       outputs:
         - name: output
       run:
