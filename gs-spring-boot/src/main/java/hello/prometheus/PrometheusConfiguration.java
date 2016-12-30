@@ -7,6 +7,7 @@ import io.prometheus.client.hotspot.DefaultExports;
 import io.prometheus.client.hotspot.MemoryPoolsExports;
 import io.prometheus.client.hotspot.StandardExports;
 import io.prometheus.client.hotspot.ThreadExports;
+import org.springframework.boot.actuate.autoconfigure.ExportMetricWriter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -38,6 +39,12 @@ public class PrometheusConfiguration {
         collectors.add(new MemoryPoolsExports());
         collectors.add(new ThreadExports());
         return new ExporterRegister(collectors);
+    }
+
+    @ExportMetricWriter
+    @Bean
+    PrometheusMetricWriter getPrometheusMetricWriter() {
+        return new PrometheusMetricWriter(metricRegistry());
     }
 
 }
