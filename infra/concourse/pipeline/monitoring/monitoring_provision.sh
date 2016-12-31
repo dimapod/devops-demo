@@ -7,7 +7,7 @@ MONITORING_IP=$(head -n 1 monitoring-ip-s3/monitoring-ip)
 echo "Application PI: ${APPLICATION_IP}"
 echo "Monitoring PI: ${MONITORING_IP}"
 
-ls monitoring-keys
+chmod 400 monitoring-keys/dpo-monitoring
 
 # Prepare hosts
 rm devops-infra/infra/monitoring/provision/ansible/hosts
