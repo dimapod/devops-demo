@@ -3,12 +3,12 @@ variable "secret_key" {}
 
 variable "project" {
   type = "string"
-  default = "dpo-prometheus"
+  default = "dpo-monitoring"
 }
 
 variable "key_name" {
   type = "string"
-  default = "dpo-prometheus"
+  default = "dpo-monitoring"
 }
 
 variable "region" {
