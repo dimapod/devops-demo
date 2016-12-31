@@ -1,4 +1,4 @@
-resource "aws_security_group" "default" {
+resource "aws_security_group" "monitoring" {
   name = "${var.project}-sg"
   description = "${var.project} security group"
 
@@ -43,6 +43,6 @@ resource "aws_security_group" "default" {
   }
 
   tags {
-    Name = "${var.project}-sg default"
+    Name = "${var.project}-sg monitoring"
   }
 }

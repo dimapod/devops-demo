@@ -4,12 +4,12 @@ provider "aws" {
   region = "${var.region}"
 }
 
-resource "aws_key_pair" "default" {
+resource "aws_key_pair" "monitoring" {
   key_name = "${var.key_name}"
   public_key = "${file("${var.key_name}.pub")}"
 }
 
-resource "aws_subnet" "default" {
+resource "aws_subnet" "monitoring" {
   vpc_id = "${var.vpc_id}"
   cidr_block = "${var.private_subnet}"
   map_public_ip_on_launch = "true"
@@ -20,14 +20,14 @@ resource "aws_subnet" "default" {
   }
 }
 
-resource "aws_instance" "prometheus" {
+resource "aws_instance" "monitoring" {
   key_name = "${var.key_name}"
   ami = "${lookup(var.amis, var.region)}"
   instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.default.id}"
+  subnet_id = "${aws_subnet.monitoring.id}"
 
   vpc_security_group_ids = [
-    "${aws_security_group.default.id}"
+    "${aws_security_group.monitoring.id}"
   ]
 
   tags {
@@ -38,7 +38,7 @@ resource "aws_instance" "prometheus" {
 }
 
 output "ip" {
-  value = "${aws_instance.prometheus.public_ip}"
+  value = "${aws_instance.monitoring.public_ip}"
 }
 
 
