@@ -15,4 +15,4 @@ cp monitoring-ip-s3/monitoring-ip devops-infra/infra/monitoring/provision/ansibl
 
 # Provision
 cd devops-infra/infra/monitoring/provision/ansible
-ansible ansible-playbook site.yml --private-key=../../../../../dpo-monitoring
+ansible-playbook site.yml --private-key=../../../../../dpo-monitoring
