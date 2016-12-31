@@ -82,41 +82,48 @@ jobs:
       file: infra-description/monitoring-ip
       acl: public-read
 
-## Provision Monitoring Instance
-#- name: provision
-#  serial: true
-#  public: true
-#  plan:
-#  - get: devops-infra
-#  - get: application-ip-s3
-#
-#  - task: build
-#    config:
-#      platform: linux
-#      image_resource:
-#        type: docker-image
-#        source:
-#          repository: xebiafrance/packer-ansible
-#          tag: '2.2.0'
-#      inputs:
-#        - name: devops-infra
-#        - name: application-ip-s3
-#      outputs:
-#        - name: infra-description
-#      run:
-#        path: devops-infra/infra/concourse/pipeline/monitoring/monitoring_deploy.sh
-#        args: ["apply"]
-#    params:
-#      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
-#      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
-#
-#  - put: infra-state-monitoring-s3
-#    params:
-#      file: infra-description/terraform-monitoring.tfstate
-#  - put: monitoring-keys
-#    params:
-#      file: infra-description/terraform-monitoring.tfstate
-#  - put: monitoring-ip-s3
-#    params:
-#      file: infra-description/monitoring-ip
-#      acl: public-read
+# Provision Monitoring Instance
+- name: provision
+  serial: true
+  public: true
+  plan:
+  - get: devops-infra
+  - get: application-ip-s3
+  - get: monitoring-ip-s3
+    trigger: true
+    passed: [infra-apply]
+  - get: monitoring-keys
+    passed: [infra-apply]
+
+  - task: build
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: xebiafrance/packer-ansible
+          tag: '2.2.0'
+      inputs:
+        - name: devops-infra
+        - name: application-ip-s3
+        - name: monitoring-ip-s3
+        - name: monitoring-keys
+      outputs:
+        - name: infra-description
+      run:
+        path: devops-infra/infra/concourse/pipeline/monitoring/monitoring_provision.sh
+        args: ["apply"]
+    params:
+      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+
+  - put: infra-state-monitoring-s3
+    params:
+      file: infra-description/terraform-monitoring.tfstate
+  - put: monitoring-keys
+    params:
+      file: infra-description/terraform-monitoring.tfstate
+  - put: monitoring-ip-s3
+    params:
+      file: infra-description/monitoring-ip
+      acl: public-read
