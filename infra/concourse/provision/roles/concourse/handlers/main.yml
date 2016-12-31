@@ -1,5 +1,7 @@
 ---
-- name: start concourse
+- name: Start concourse
+  become: yes
   environment:
     CONCOURSE_EXTERNAL_URL: "http://$(hostname --ip-address):8080"
-  shell: docker-compose up -d
+  docker_service:
+    project_src: "/home/ec2-user"

@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  remote_user: ec2-user
+  vars:
+      application_host: 10.0.0.1
+
+  roles:
+    - docker
+    - prometheus

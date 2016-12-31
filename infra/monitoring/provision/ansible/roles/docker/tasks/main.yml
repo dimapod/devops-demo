@@ -1,0 +1,44 @@
+---
+- name: Install docker
+  become: yes
+  yum:
+    name: docker
+    state: present
+    update_cache: yes
+  notify: restart docker
+
+- name: Add the ec2-user to the docker group
+  become: yes
+  user:
+    name: ec2-user
+    groups: docker
+    append: yes
+
+- name: Create docker user
+  become: yes
+  user:
+    name: docker
+    groups: docker
+
+#- name: Install docker compose
+#  become: yes
+#  get_url:
+#    url: "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-Linux-x86_64"
+#    dest: "/usr/local/bin/docker-compose"
+#    mode: "u=rwx,g=rx,o=rx"
+
+- name: pip docker-py
+  become: yes
+  pip:
+    name: docker-py
+    version: 1.10.6
+  notify: restart docker
+
+- name: pip docker-compose
+  become: yes
+  pip:
+    name: docker-compose
+    version: 1.9.0
+  notify: restart docker
+
+- meta: flush_handlers

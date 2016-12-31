@@ -1,0 +1,5 @@
+---
+- name: Restart prometheus
+  become: yes
+  docker_service:
+    project_src: "/home/ec2-user"
