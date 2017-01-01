@@ -19,11 +19,11 @@
 
 - name: Set Concourse MONITORING Pipeline
   become: yes
-  shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline build $(pwd)/devops-demo/infra/concourse/pipeline/monitoring/pipeline.yml
+  shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline monitoring $(pwd)/devops-demo/infra/concourse/pipeline/monitoring/pipeline.yml
 
 - name: Set Concourse MONITORING-DESTROY Pipeline
   become: yes
-  shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline build $(pwd)/devops-demo/infra/concourse/pipeline/monitoring-destroy/pipeline.yml
+  shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline monitoring-destroy $(pwd)/devops-demo/infra/concourse/pipeline/monitoring-destroy/pipeline.yml
 
 - name: Set Concourse DESTROY-INFRA Pipeline
   become: yes

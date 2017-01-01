@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-# Prepare Base AMI ID
-APPLICATION_IP=$(head -n 1 application-ip-s3/application-ip)
-
 # Prepare previous infrastructure description
 cp infra-state-monitoring-s3/terraform-monitoring.tfstate devops-infra/infra/monitoring/provision/terraform/terraform.tfstate
 
 # Prepare AWS Keys
-echo "Application PI: ${APPLICATION_IP}"
 export TF_VAR_access_key=${AWS_ACCESS_KEY_ID}
 export TF_VAR_secret_key=${AWS_SECRET_ACCESS_KEY}
 
