@@ -37,7 +37,7 @@ resources:
   source:
     bucket: dpo-devops
     region_name: eu-central-1
-    versioned_file: dpo-monitoring
+    versioned_file: dpo-monitoring.pem
     access_key_id: {{s3-access-key-id}}
     secret_access_key: {{s3-secret-access-key}}
 
@@ -76,9 +76,6 @@ jobs:
   - put: infra-state-monitoring-s3
     params:
       file: infra-description/terraform-monitoring.tfstate
-  - put: monitoring-keys
-    params:
-      file: infra-description/dpo-monitoring
   - put: monitoring-ip-s3
     params:
       file: infra-description/monitoring-ip

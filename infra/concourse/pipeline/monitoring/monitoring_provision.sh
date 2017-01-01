@@ -7,7 +7,7 @@ MONITORING_IP=$(head -n 1 monitoring-ip-s3/monitoring-ip)
 echo "Application PI: ${APPLICATION_IP}"
 echo "Monitoring PI: ${MONITORING_IP}"
 
-chmod 400 monitoring-keys/dpo-monitoring
+chmod 400 monitoring-keys/dpo-monitoring.pem
 
 # Prepare hosts
 rm devops-infra/infra/monitoring/provision/ansible/hosts
@@ -15,4 +15,4 @@ cp monitoring-ip-s3/monitoring-ip devops-infra/infra/monitoring/provision/ansibl
 
 # Provision
 cd devops-infra/infra/monitoring/provision/ansible
-ansible-playbook site.yml --private-key=../../../../../monitoring-keys/dpo-monitoring
+ansible-playbook site.yml --private-key=../../../../../monitoring-keys/dpo-monitoring.pem
