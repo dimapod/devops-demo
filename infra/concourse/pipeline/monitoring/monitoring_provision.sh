@@ -13,6 +13,9 @@ chmod 400 monitoring-keys/dpo-monitoring.pem
 rm devops-infra/infra/monitoring/provision/ansible/hosts
 cp monitoring-ip-s3/monitoring-ip devops-infra/infra/monitoring/provision/ansible/hosts
 
+echo "Waiting 15s for EC2 to boot..."
+sleep 15
+
 # Provision
 cd devops-infra/infra/monitoring/provision/ansible
 ansible-playbook site.yml --private-key=../../../../../monitoring-keys/dpo-monitoring.pem

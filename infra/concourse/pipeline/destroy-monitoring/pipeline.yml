@@ -1,0 +1,75 @@
+---
+resources:
+- name: devops-infra
+  type: git
+  source:
+    uri: https://github.com/dimapod/devops-demo.git
+
+- name: infra-state-monitoring-s3
+  type: s3
+  source:
+    bucket: dpo-devops
+    region_name: eu-central-1
+    versioned_file: terraform-monitoring.tfstate
+    access_key_id: {{s3-access-key-id}}
+    secret_access_key: {{s3-secret-access-key}}
+
+jobs:
+- name: infra-destroy-plan
+  public: true
+  serial: true
+  serial_groups: ["monitoring"]
+  plan:
+  - get: devops-infra
+  - get: infra-state-monitoring-s3
+
+  - task: plan
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: uzyexe/terraform
+      inputs:
+        - name: devops-infra
+        - name: infra-state-monitoring-s3
+      outputs:
+        - name: infra-description
+      run:
+        path: devops-infra/infra/concourse/pipeline/destroy-monitoring/stop_monitoring.sh
+        args: ["plan"]
+    params:
+      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+
+- name: infra-destroy
+  public: true
+  serial: true
+  serial_groups: ["monitoring"]
+  plan:
+  - get: devops-infra
+  - get: infra-state-monitoring-s3
+    passed: [infra-destroy-plan]
+
+  - task: destroy
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: uzyexe/terraform
+      inputs:
+        - name: devops-infra
+        - name: infra-state-monitoring-s3
+      outputs:
+        - name: infra-description
+      run:
+        path: devops-infra/infra/concourse/pipeline/destroy-monitoring/stop_monitoring.sh
+        args: ["destroy"]
+    params:
+      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+
+  - put: infra-state-monitoring-s3
+    params:
+      {file: infra-description/terraform-monitoring.tfstate}

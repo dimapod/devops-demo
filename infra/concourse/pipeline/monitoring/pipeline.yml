@@ -47,7 +47,7 @@ jobs:
 - name: infra-apply
   serial: true
   public: true
-  serial_groups: ["prometheus"]
+  serial_groups: ["monitoring"]
   plan:
   - get: devops-infra
   - get: application-ip-s3
@@ -92,7 +92,6 @@ jobs:
     trigger: true
     passed: [infra-apply]
   - get: monitoring-keys
-    passed: [infra-apply]
 
   - task: build
     config:
@@ -116,12 +115,6 @@ jobs:
       AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
       AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
 
-  - put: infra-state-monitoring-s3
-    params:
-      file: infra-description/terraform-monitoring.tfstate
-  - put: monitoring-keys
-    params:
-      file: infra-description/terraform-monitoring.tfstate
   - put: monitoring-ip-s3
     params:
       file: infra-description/monitoring-ip
