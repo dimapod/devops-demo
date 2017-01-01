@@ -17,6 +17,14 @@
   become: yes
   shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline build $(pwd)/devops-demo/infra/concourse/pipeline/build/pipeline.yml
 
+- name: Set Concourse MONITORING Pipeline
+  become: yes
+  shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline build $(pwd)/devops-demo/infra/concourse/pipeline/monitoring/pipeline.yml
+
+- name: Set Concourse MONITORING-DESTROY Pipeline
+  become: yes
+  shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline build $(pwd)/devops-demo/infra/concourse/pipeline/monitoring-destroy/pipeline.yml
+
 - name: Set Concourse DESTROY-INFRA Pipeline
   become: yes
   shell: ./devops-demo/infra/concourse/provision/fly-docker.sh set-pipeline destroy-infra $(pwd)/devops-demo/infra/concourse/pipeline/destroy-infra/pipeline.yml
