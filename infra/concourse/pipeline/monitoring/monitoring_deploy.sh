@@ -4,9 +4,7 @@
 APPLICATION_IP=$(head -n 1 application-ip-s3/application-ip)
 
 # Prepare previous infrastructure description
-#mv devops-infra/infra/monitoring/provision/terraform/terraform.tfstate devops-infra/infra/monitoring/provision/terraform/terraform.tfstate_old
-
-#cp infra-description-s3/terraform.tfstate devops-infra/infra/infra-as-code/
+cp infra-state-monitoring-s3/terraform-monitoring.tfstate devops-infra/infra/monitoring/provision/terraform/terraform.tfstate
 
 # Prepare AWS Keys
 echo "Application PI: ${APPLICATION_IP}"

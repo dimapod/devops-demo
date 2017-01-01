@@ -51,6 +51,7 @@ jobs:
   plan:
   - get: devops-infra
   - get: application-ip-s3
+  - get: infra-state-monitoring-s3
 
   - task: build
     config:
@@ -62,6 +63,7 @@ jobs:
       inputs:
         - name: devops-infra
         - name: application-ip-s3
+        - name: infra-state-monitoring-s3
       outputs:
         - name: infra-description
       run:
