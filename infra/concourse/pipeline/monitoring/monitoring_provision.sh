@@ -18,4 +18,4 @@ sleep 15
 
 # Provision
 cd devops-infra/infra/monitoring/provision/ansible
-ansible-playbook site.yml --private-key=../../../../../monitoring-keys/dpo-monitoring.pem
+ansible-playbook site.yml --private-key=../../../../../monitoring-keys/dpo-monitoring.pem --extra-vars "application_host=${APPLICATION_IP}"
