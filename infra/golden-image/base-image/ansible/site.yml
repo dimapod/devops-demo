@@ -7,3 +7,4 @@
   roles:
     - nginx
     - java8-oracle
+    - node-exporter
