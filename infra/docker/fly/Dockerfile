@@ -6,5 +6,4 @@ RUN chmod +x /usr/local/bin/fly
 VOLUME ["/home"]
 WORKDIR /home
 
-#ENTRYPOINT ["/usr/local/bin/fly"]
 ENTRYPOINT ["/bin/sh", "-c"]

@@ -7,7 +7,7 @@ concourse-db:
     PGDATA: /database
 
 concourse-web:
-  image: concourse/concourse
+  image: concourse/concourse:2.5.1
   links: [concourse-db]
   command: web
   ports: ["8080:8080"]
@@ -20,7 +20,7 @@ concourse-web:
       postgres://concourse:xebia@concourse-db:5432/concourse?sslmode=disable
 
 concourse-worker:
-  image: concourse/concourse
+  image: concourse/concourse:2.5.1
   privileged: true
   links: [concourse-web]
   command: worker

@@ -7,4 +7,3 @@
   roles:
     - nginx
     - java8-oracle
-#    - java-app
