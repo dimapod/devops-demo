@@ -3,8 +3,7 @@
     "PACKER_OS_FLAVOUR": "ubuntu",
     "PACKER_BOX_NAME": "ubuntu-14.04.4-server-amd64",
     "AWS_ACCESS_KEY_ID": "{{env `AWS_ACCESS_KEY_ID`}}",
-    "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "DIGITALOCEAN_API_TOKEN": "{{env `DIGITALOCEAN_API_TOKEN`}}"
+    "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}"
   },
   "builders": [
     {
