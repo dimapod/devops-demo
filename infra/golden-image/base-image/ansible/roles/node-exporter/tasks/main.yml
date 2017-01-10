@@ -8,7 +8,7 @@
 
 - name: Untar node-exporter
   unarchive:
-    src: node_exporter-0.13.0.linux-amd64.tar.gz
+    src: /home/ubuntu/node_exporter-0.13.0.linux-amd64.tar.gz
     dest: /home/ubuntu
     remote_src: True
   notify: start node-exporter

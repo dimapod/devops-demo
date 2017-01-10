@@ -11,8 +11,8 @@ resources:
     bucket: dpo-devops
     region_name: eu-central-1
     versioned_file: terraform-monitoring.tfstate
-    access_key_id: {{s3-access-key-id}}
-    secret_access_key: {{s3-secret-access-key}}
+    access_key_id: {{access-key-id}}
+    secret_access_key: {{secret-access-key}}
 
 jobs:
 - name: infra-destroy-plan
@@ -39,8 +39,8 @@ jobs:
         path: devops-infra/infra/concourse/pipeline/monitoring-destroy/stop_monitoring.sh
         args: ["plan"]
     params:
-      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
-      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+      AWS_ACCESS_KEY_ID: {{access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{secret-access-key}}
 
 - name: infra-destroy
   public: true
@@ -67,8 +67,8 @@ jobs:
         path: devops-infra/infra/concourse/pipeline/monitoring-destroy/stop_monitoring.sh
         args: ["destroy"]
     params:
-      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
-      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+      AWS_ACCESS_KEY_ID: {{access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{secret-access-key}}
 
   - put: infra-state-monitoring-s3
     params:

@@ -17,8 +17,8 @@ resources:
     bucket: dpo-devops
     region_name: eu-central-1
     versioned_file: base-image-id
-    access_key_id: {{s3-access-key-id}}
-    secret_access_key: {{s3-secret-access-key}}
+    access_key_id: {{access-key-id}}
+    secret_access_key: {{secret-access-key}}
 
 jobs:
 - name: base-image
@@ -44,8 +44,8 @@ jobs:
       run:
         path: devops-infra/infra/concourse/pipeline/golden-image/play-packer.sh
     params:
-      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
-      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+      AWS_ACCESS_KEY_ID: {{access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{secret-access-key}}
   - put: base-image-id
     params:
       {file: output/base-image-id}

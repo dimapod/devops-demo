@@ -17,8 +17,8 @@ resources:
     bucket: dpo-devops
     region_name: eu-central-1
     versioned_file: gs-spring-boot-0.1.0.jar
-    access_key_id: {{s3-access-key-id}}
-    secret_access_key: {{s3-secret-access-key}}
+    access_key_id: {{access-key-id}}
+    secret_access_key: {{secret-access-key}}
 
 - name: base-image-s3
   type: s3
@@ -26,8 +26,8 @@ resources:
     bucket: dpo-devops
     region_name: eu-central-1
     versioned_file: base-image-id
-    access_key_id: {{s3-access-key-id}}
-    secret_access_key: {{s3-secret-access-key}}
+    access_key_id: {{access-key-id}}
+    secret_access_key: {{secret-access-key}}
 
 - name: application-image-s3
   type: s3
@@ -35,8 +35,8 @@ resources:
     bucket: dpo-devops
     region_name: eu-central-1
     versioned_file: application-image-id
-    access_key_id: {{s3-access-key-id}}
-    secret_access_key: {{s3-secret-access-key}}
+    access_key_id: {{access-key-id}}
+    secret_access_key: {{secret-access-key}}
 
 - name: infra-description-s3
   type: s3
@@ -44,8 +44,8 @@ resources:
     bucket: dpo-devops
     region_name: eu-central-1
     versioned_file: terraform.tfstate
-    access_key_id: {{s3-access-key-id}}
-    secret_access_key: {{s3-secret-access-key}}
+    access_key_id: {{access-key-id}}
+    secret_access_key: {{secret-access-key}}
 
 - name: application-ip-s3
   type: s3
@@ -53,8 +53,8 @@ resources:
     bucket: dpo-devops
     region_name: eu-central-1
     versioned_file: application-ip
-    access_key_id: {{s3-access-key-id}}
-    secret_access_key: {{s3-secret-access-key}}
+    access_key_id: {{access-key-id}}
+    secret_access_key: {{secret-access-key}}
 
 jobs:
 # QA: Testing / Build
@@ -103,8 +103,8 @@ jobs:
       run:
         path: devops-infra/infra/concourse/pipeline/build/build_application_image.sh
     params:
-      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
-      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+      AWS_ACCESS_KEY_ID: {{access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{secret-access-key}}
 
   - put: application-image-s3
     params:
@@ -139,8 +139,8 @@ jobs:
         path: devops-infra/infra/concourse/pipeline/build/infra_deploy.sh
         args: ["plan"]
     params:
-      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
-      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+      AWS_ACCESS_KEY_ID: {{access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{secret-access-key}}
 
 # Infrastructure apply
 - name: infra-apply
@@ -170,8 +170,8 @@ jobs:
         path: devops-infra/infra/concourse/pipeline/build/infra_deploy.sh
         args: ["apply"]
     params:
-      AWS_ACCESS_KEY_ID: {{s3-access-key-id}}
-      AWS_SECRET_ACCESS_KEY: {{s3-secret-access-key}}
+      AWS_ACCESS_KEY_ID: {{access-key-id}}
+      AWS_SECRET_ACCESS_KEY: {{secret-access-key}}
 
   - put: infra-description-s3
     params:
