@@ -1,15 +1,15 @@
 ---
 
-- name: Fetch node-exporter
-  get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v0.13.0/node_exporter-0.13.0.linux-amd64.tar.gz"
-    dest: "/home/ubuntu/"
-    owner: ubuntu
-  notify: start node-exporter
+#- name: Fetch node-exporter
+#  get_url:
+#    url: "https://github.com/prometheus/node_exporter/releases/download/v0.13.0/node_exporter-0.13.0.linux-amd64.tar.gz"
+#    dest: "/home/ubuntu/"
+#    owner: ubuntu
+#  notify: start node-exporter
 
 - name: Untar node-exporter
   unarchive:
-    src: /home/ubuntu/node_exporter-0.13.0.linux-amd64.tar.gz
+    src: "https://github.com/prometheus/node_exporter/releases/download/v0.13.0/node_exporter-0.13.0.linux-amd64.tar.gz"
     dest: /home/ubuntu
     remote_src: True
   notify: start node-exporter
