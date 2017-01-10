@@ -11,7 +11,6 @@
   unarchive:
     src: /home/ubuntu/node_exporter-0.13.0.linux-amd64.tar.gz
     dest: /home/ubuntu
-    remote_src: True
     copy: no
   notify: start node-exporter
 
