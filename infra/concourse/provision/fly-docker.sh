@@ -8,7 +8,7 @@ LOGIN_CMD="fly -t ${TARGET} login --concourse-url ${CONCOURSE_URL} --username co
 
 setVars() {
     PIPELINE_NAME=$1
-    SET_PIPELINE_CMD="fly -t ${TARGET} set-pipeline -p ${PIPELINE_NAME} -c /home/pipeline.yml --load-vars-from /s3-credentials.yml -n"
+    SET_PIPELINE_CMD="fly -t ${TARGET} set-pipeline -p ${PIPELINE_NAME} -c /home/pipeline.yml --load-vars-from /aws-xfr-credentials.yml -n"
     UNPAUSE_PIPELINE_CMD="fly -t ${TARGET} unpause-pipeline -p ${PIPELINE_NAME}"
     DESTROY_PIPELINE_CMD="fly -t ${TARGET} destroy-pipeline -p ${PIPELINE_NAME} -n"
 }
@@ -26,7 +26,7 @@ doSetPipeline() {
 
     docker run --rm \
         -v ${PIPELINE_FILE}:/home/pipeline.yml \
-        -v $(pwd)/s3-credentials.yml:/s3-credentials.yml \
+        -v $(pwd)/aws-xfr-credentials.yml:/aws-xfr-credentials.yml \
         xebiafrance/fly \
         "${LOGIN_CMD}; ${SET_PIPELINE_CMD};"
 }
