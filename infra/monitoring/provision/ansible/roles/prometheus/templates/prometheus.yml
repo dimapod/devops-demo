@@ -31,3 +31,9 @@ scrape_configs:
     metrics_path: '/prometheus'
     static_configs:
       - targets: ['{{ application_host }}']
+
+  - job_name: 'application-node'
+    scrape_interval: 5s
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['{{ application_host:9100 }}']
